@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button pauseButton;
     private Button stopButton;
     private ListView songListView;
+    private List<String> songTitles = new ArrayList<>();
     private List<Integer> tracks = new ArrayList<>();
     private int currentTrackIndex = 0;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loadTracks();
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tracks);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, songTitles);
         songListView.setAdapter(adapter);
 
         mediaPlayer = MediaPlayer.create(this, tracks.get(currentTrackIndex));
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 int resourceId = resources.getIdentifier(field.getName(), "raw", getPackageName());
                 tracks.add(resourceId);
+                String songTitle = field.getName(); // Assume the resource file name is the song title
+                songTitles.add(songTitle);
             } catch (Exception e) {
                 e.printStackTrace();
             }
